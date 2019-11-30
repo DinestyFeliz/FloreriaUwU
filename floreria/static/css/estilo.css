@@ -1,0 +1,90 @@
+.contenedor{
+    position: relative;
+    display: inline-block;
+    text-align: center;
+}
+ 
+.texto-encima{
+    position: absolute;
+    top: 10px;
+    left: 10px;
+}
+.centrado{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.jumbotron{
+    margin-top: 15px;
+    background-color: #E91E63;
+}
+
+.jumbotron h1{
+    color: #FFFFFF;
+}
+
+.jumbotron p{
+    color: #FFFFFF;
+}
+
+.navbar-dark{
+    background-color: #7B1FA2;
+}
+
+.page-footer{
+    background-color: rgb(240, 240, 240);
+    margin-top: 25px;
+}
+
+.pagese-footer a{
+    color: #9C27B0;
+}
+
+.jumbdfotron h2{
+    background-color: #9C27B0;
+    color: #FFFFFF;
+    margin-left: 40%;
+    margin-right: 40%;
+    border-radius: 30px;
+}
+
+.btn{
+    background-color: #7B1FA2; 
+    color: #DCEDC8;
+}
+
+.col-lg-4 div{
+    background-color: rgb(240, 240, 240);
+    color: #212121;
+}
+
+.fondo{
+    background-image: url("{% static 'img/floreria-hombre.jpg' %}") #000;
+    height: 1000px;
+    width: 1000px;
+    position: relative;
+}
+
+.icono{
+    height: 100px;
+    width: 100px;
+}
+
+@media(max-width:991.5px){
+    .img_btn img{
+        display: none;
+    }
+}
+
+@media(max-width:991.5px){
+    .uwu img{
+        width: 150px;
+    }
+}
+@media(min-width:991.5px){
+    .uwu img{
+        width: 100%;
+    }
+}

@@ -1,0 +1,154 @@
+{% extends "core/base.html" %}
+{% block titulo %}
+    Registro de Flores
+{% endblock titulo %}
+{% load static %}
+{% block contenido %}
+        <h2>Registro de Flores</h2>
+        <center>
+            <form id="frmdatos" method="POST" action="" enctype="multipart/form-data">
+            {% csrf_token %}
+                <table border="1">
+                    <tr>
+                        <td>
+                            <div class="form-group col-md-10">
+                                <label for="Nombre">Nombre:</label>
+                                <input type="text" name="txtNombre" class="form-control" id="txtNombre" placeholder="Ingrese nombre">
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="form-group col-md-10">
+                                <label for="Precio">Precio:</label>
+                                <input type="number" name="txtPrecio" class="form-control" id="txtPrecio" placeholder="0">
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="form-group col-md-10">
+                                <label for="Descripcion">Descripcion:</label>
+                                <textarea name="txtDescripcion" class="form-control" id="txtDescripcion" rows="3"></textarea>
+                            </div>    
+                        </td>
+                    </tr>
+                    <tr> 
+                        <td>
+                            <div class="form-group col-md-10">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="chboEstado" value="" id="chboEstado">
+                                    <label class="form-check-label" for="Estado">Estado</label>
+                                </div>
+                            </div>
+                        </td>            
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="form-group col-md-10">
+                                <label for="Stock">Stock:</label>
+                                <input type="number" name="txtStock" class="form-control" id="txtStock" placeholder="0">
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="input-group">
+                                <div class="custom-file">
+                                    <input type="file" name="txtImagen" class="custom-file-input" id="txtImagen" aria-describedby="inputGroupFileAddon04">
+                                    <label class="custom-file-label" for="Imagen">Seleccione un archivo</label>
+                                </div>
+                            <div class="input-group-append">
+                                <button class="btn btn-outline-secondary" type="button" id="inputGroupFileAddon04">Button</button>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="form-group col-md-10">
+                                <label for="Categoria">Categoría</label>
+                                <select class="form-control" id="cboCategoria">
+                                    {% for c in listacategoria %}
+                                    <option>{{c.name}}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </td>
+                    </tr>
+                    
+                </table>
+                <table>
+                    <tr>
+                        <td>
+                            <button type="submit" name="accion" class="btn btn-primary">Grabar</button>
+                            <button type="submit" name="accion" class="btn btn-primary">Eliminar</button>
+                        </td>
+                    </tr> 
+                </table>
+            </form>
+        </center>
+        <div id="respuesta">{{msg}}</div>
+        
+        <!--<div class="formulario">
+            <center>
+                 <form id="frmdatos" method="POST" action="" enctype="multipart/form-data">
+                 {% csrf_token %}
+                <table border="1">
+                    <tr>
+                        <td colspan="2" style="text-align: center;font-size: 20px;">Registro</td>
+                    </tr>
+                    <tr>
+                        <td>Nombre:</td>
+                        <td>
+                            <input type="text" name="txtNombre" id="txtNombre"> </td>
+                    </tr>
+                    <tr>
+                        <td>Precio:</td>
+                        <td>
+                            <input type="number" name="txtPrecio" id="txtPrecio"> </td>
+                    </tr>
+                    <tr>
+                        <td>Descripcion:</td>
+                        <td>
+                          <textarea name="txtDescripcion"></textarea>    
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Estado:</td>
+                        <td>
+                            <input type="checkbox" name="chboEstado" id="chboEstado"> </td>
+                    </tr>
+                    <tr>
+                        <td>Stock:</td>
+                        <td>
+                            <input type="number" name="txtStock" id="txtStock"> </td>
+                    </tr>
+                    <tr>
+                        <td>Seleccione Imagen:</td>
+                        <td>
+                            <input type="file" name="txtImagen">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Categoria:</td>
+                        <td> 
+                        <select name="cboCategoria">
+                            {% for c in listacategoria %}
+                           <option>{{c.name}}</option>
+                           {% endfor %}
+                        </select>
+                         </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input type="submit" value="grabar" name="accion">
+                            <input type="submit" value="eliminar" name="accion">
+                        </td>
+                    </tr>
+                </table>
+                </form>
+            </center>
+        </div>
+        <div id="respuesta">{{msg}}</div>-->
+{% endblock contenido %}
+    
