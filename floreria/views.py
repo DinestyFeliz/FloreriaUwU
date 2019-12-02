@@ -9,6 +9,44 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate,logout, login as auth_login
 # Create your views here.
 
+#imports para guardar los tokens
+from django.views.decorators.http import require_http_methods
+from django.views.decorators.csrf import csrf_exempt
+
+from django.http import HttpRequest, HttpResponseBadRequest
+
+from django.core import serializers
+import json
+
+from fcm_django.models import FCMDevice
+
+@csrf_exempt
+@require_http_methods(['POST'])
+def guardar_token(request):
+    body = request.body.decode('utf-8')
+    bodyDict = json.loads(body)
+
+    token = bodyDict('token')
+
+    existe = FCMDevice.objects.filter(registration_id = token, active=True)
+
+    if len(existe) > 0:
+        return HttpResponseBadRequest(json.dumps({'mensaje':'el token ya existe'}))
+
+    dispositivo = FCMDevice()
+    dispositivo.registration_id = token
+    dispositivo = True
+
+    #solo si el usuario esta autenticado procederemos a enlazarlo
+    if request.user.is_authenticated:
+        dispositivo.user = request.user
+    
+    try:
+        dispositivo.save()
+        return HttpRequest(json.dumps({'mensaje':'token guardado'}))
+    except:
+        return HttpResponseBadRequest(json.dumps({'mensaje':'no se ha podido guardar'}))
+
 def agregar_carrito(request,id):
     #recuperar la lista del carrito desde la sesion
     lista=request.session.get("carrito","")
@@ -87,6 +125,15 @@ def formulario(request):
                 Categoria=obj_categoria
             )
             flor.save() #graba los datos del modelo
+
+            #recuperamos a todos los dispositivos
+            dispositivos = FCMDevice.objects.filter(active=True)
+            dispositivos.send_message(
+                title="Nuevo Articulo Agregado!!!",
+                body="Se ha agregado " + formulario.cleaned_data['nombre'],
+                icon="/static/img/icon.png"
+            )
+
             return render(request,'core/formulario.html',{'listacategoria':categorias,'msg':'Grabo'})
         if accion=='eliminar':
             nombre=request.POST.get("txtNombre")#recupera el titulo

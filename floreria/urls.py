@@ -18,6 +18,8 @@ urlpatterns = [
     path('eliminar_flores/<id>/',eliminar_flores,name='ELIMINA'),
     path('agregar_carrito/<id>/',agregar_carrito,name='AGREGAR'),
     path('oauth/',include('social_django.urls',namespace='social')),
+    #guardar token
+    path('guardar-token/', guardar_token, name='guardar-token'),
     #recuperar contraseña
     path('reset/password_reset', PasswordResetView.as_view(template_name='registration/password_reset_forms.html', email_template_name="registration/password_reset_email.html"), name = 'password_reset'),
     path('reset/password_reset_done', PasswordResetDoneView.as_view(template_name='registration/password_reset_done.html'), name = 'password_reset_done'),

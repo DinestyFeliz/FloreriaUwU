@@ -13,6 +13,97 @@
     <link href="{% static 'css/estilos_romeo.css' %}" type="text/css" rel="stylesheet" -->
     <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
     <link href="{% static 'css/estilo.css' %}" type="text/css" rel="stylesheet">
+
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/7.5.0/firebase-app.js"></script>
+
+    <!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+    <!--script src="https://www.gstatic.com/firebasejs/7.5.0/firebase-analytics.js"></script-->
+    <script src="https://www.gstatic.com/firebasejs/3.9.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/3.9.0/firebase-messaging.js"></script>
+
+
+    <script>
+        // Your web app's Firebase configuration
+        var firebaseConfig = {
+            apiKey: "AIzaSyA5cv5jrW8Cu8HToqhNm7rB3nWguZ3i_Jc",
+            authDomain: "floreriauwu.firebaseapp.com",
+            databaseURL: "https://floreriauwu.firebaseio.com",
+            projectId: "floreriauwu",
+            storageBucket: "floreriauwu.appspot.com",
+            messagingSenderId: "1004657333762",
+            appId: "1:1004657333762:web:9ba7dbb5f692e5f109b91b",
+            measurementId: "G-13YHF7VVBD"
+        };
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+
+        let messaging = firebase.messaging();
+
+        //primero se enlaca el serviceWorker
+        navegator.serviceWorker
+        .register('./serviceworker.js')
+        .then(function(register){
+
+            messaging.useServiceWorker(register);
+
+            //solicitamos el permiso para recivir notificaciones al usuario
+            messaging.requestPermission()
+            .then(function(){
+                console.log("El usuario ha aceptado recibir notificaciones")
+
+                return messaging.getToken();
+            })
+            .then(function(token){
+                console.log(token);
+                //enviar el token hacia Django para guardarla en la base de datos
+                fetch('guardar-token/',{
+                    method:'post',
+                    header:{
+                        'content-type':'application/json',
+                        'Accept':'aplication/json'
+                    },
+                    body:JSON.stringify({
+                        'token':token
+                    })
+                })
+                .then(function(resultado){
+                    console.log("se ha guardado el token")
+                })
+                .catch(function(e){
+                    console.log("no se ha podido guardar el token")
+                })
+            })
+            .catch(function(e){
+                console.log("El usuario no ha aceptado recibir notificaciones")
+            })
+
+        })
+
+        //programamos la recepcion de las notificaciones push
+
+        messaging.onMessage(function(payload){
+
+            let data = payload;
+            console.log(data);
+
+            let title = payload.Notification.title;
+
+            let options = {
+                body:payload.navigation.body,
+                icon:payload.navigation.icon
+            }
+
+            let mensaje = new Notificacion(title, options);
+
+        });
+
+        firebase.analytics();
+        
+
+    </script>
+
     <title>
     {% block titulo %}
     

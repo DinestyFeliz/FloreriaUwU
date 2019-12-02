@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'floreria.apps.FloreriaConfig', #incluir la aplicacion en el proyecto
     'social_django', #incluir la opcion de autentificacion con redes sociales
     'pwa', #service worker
+    'fcm_django', #notificaciones push
 ]
 
 MIDDLEWARE = [
@@ -153,3 +154,16 @@ EMAIL_HOST_PASSWORD = 'YOU PASSWORD'
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
 PWA_SERVIVE_WORKER_PATH = os.path.join(BASE_DIR,'serviceworker.js')
+
+FCM_DJANGO_SETTINGS  = {
+        " APP_VERBOSE_NAME " : "FloreriaUwU" ,
+          # predeterminado: _ ('FCM Django') 
+        " FCM_SERVER_KEY " : "AIzaSyA5cv5jrW8Cu8HToqhNm7rB3nWguZ3i_Jc" ,
+          # verdadero si desea tener solo un dispositivo activo por usuario registrado a la vez 
+         # predeterminado: Falso 
+        " ONE_DEVICE_PER_USER " : False,
+          # dispositivos a los que no se pueden enviar notificaciones, 
+         #se eliminan al recibir una respuesta de error de FCM 
+         # predeterminado: Falso 
+        " DELETE_INACTIVE_DEVICES " : True,
+}
