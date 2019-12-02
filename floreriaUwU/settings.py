@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'floreria.apps.FloreriaConfig', #incluir la aplicacion en el proyecto
     'social_django', #incluir la opcion de autentificacion con redes sociales
+    'pwa', #service worker
 ]
 
 MIDDLEWARE = [
@@ -150,3 +151,5 @@ EMAIL_PORT = 587
 EMAIL_HOST_USER = 'YOUR EMAIL'
 EMAIL_HOST_PASSWORD = 'YOU PASSWORD'
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
+PWA_SERVIVE_WORKER_PATH = os.path.join(BASE_DIR,'serviceworker.js')
