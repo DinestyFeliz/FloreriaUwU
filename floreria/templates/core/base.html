@@ -133,15 +133,23 @@
                             <li class="nav-item">
                                 <a class="nav-link" href="{% url 'IND' %}">Home <span class="sr-only">(current)</span></a>
                             </li>
+                            {% if user.is_authenticated %}
                             <li class="nav-item">
                                 <a class="nav-link" href="{% url 'GAL' %}">Galería <span class="sr-only">(current)</span></a>
                             </li>
+                            {% endif %}
+                            {% if is_superuser %}
                             <li class="nav-item">
                                 <a class="nav-link" href="{% url 'FORMU' %}">Formulario <span class="sr-only">(current)</span></a>
                             </li>
+                            {% endif %}
                             <li class="nav-item">
                                 <a class="nav-link" href="{% url 'QUIEN' %}">Quienes somos <span class="sr-only">(current)</span></a>
                             </li>
+                            {% if user.is_anonymous %}
+                            </ul>
+                            {% endif %}
+                            {% if user.is_authenticated %}
                             <li class="nav-item">
                                 <a class="nav-link" href="#">Limpiar Carrito <span class="sr-only">(current)</span></a>
                             </li>
@@ -159,6 +167,16 @@
                                 </li>
                             </ul>
                         </form>
+                        {% endif %}
+                        {% if user.is_anonymous %}
+                            <form class="form-inline my-2 my-lg-0">
+                                <ul class="navbar-nav mr-auto">
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="{% url 'LOGINACCESO' %}">Iniciar Sesión <span class="sr-only">(current)</span></a>
+                                    </li>
+                                </ul>
+                            </form>
+                        {% endif %}
                     </div>
                 </nav>
             </div>

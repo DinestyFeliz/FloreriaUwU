@@ -1,0 +1,57 @@
+{% extends "template/base2.html" %}
+{% block titulo %}
+    Registro de Usuario
+{% endblock titulo %}
+{% load static %}
+{% block contenido %}
+        <h2>Registro de Usuario</h2>
+        <center>
+            <form id="frmdatos" method="POST" action="" enctype="multipart/form-data">
+            {% csrf_token %}
+                <table border="1">
+                    <tr>
+                        <td>
+                            <div class="form-group col-md-10">
+                                <label for="Nombre">Nombre de Usuario:</label>
+                                <input type="text" name="txtNombre" class="form-control" id="txtNombre" placeholder="Ingrese nombre de usuario">
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="form-group col-md-10">
+                                <label for="Correo">Correo:</label>
+                                <input type="email" name="txtEmail" class="form-control" id="txtEmail" placeholder="@gmail.com">
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="form-group col-md-10">
+                                <label for="Contraseña">Contraseña:</label>
+                                <input type="password" name="txtContraseña" class="form-control" id="txtContraseña">
+                            </div>    
+                        </td>
+                    </tr>
+                   <tr>
+                        <td>
+                            <div class="form-group col-md-10">
+                                <label for="Contraseña_confirm">Contraseña:</label>
+                                <input type="password" name="txtContraseña_confirm" class="form-control" id="txtContraseña_confirm">
+                            </div>    
+                        </td>
+                    </tr>        
+                </table>
+                <table>
+                    <tr>
+                        <td>
+                            <button type="submit" name="accion" class="btn btn-primary">Limpiar</button>
+                            <button type="submit" name="accion" class="btn btn-primary">Registrar</button>
+                        </td>
+                    </tr> 
+                </table>
+            </form>
+        </center>
+        <div id="respuesta">{{msg}}</div>
+{% endblock contenido %}
+    

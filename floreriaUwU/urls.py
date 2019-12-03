@@ -25,6 +25,8 @@ urlpatterns = [
     # como no colocque nada, se va a la siguiente página: 
     path('',include('floreria.urls')), #indicar que utilice el archivo URLS.py de floreria
     path('oauth/',include('social_django.urls',namespace='social')), #login de facebook
+    #login usuario final
+    path('accounts/', include('django.contrib.auth.urls')),
     #recuperar contraseña
     path('', include('pwa.urls')), #url service worker
     path('reset/password_reset', PasswordResetView.as_view(template_name='registration/password_reset_forms.html', email_template_name="registration/password_reset_email.html"), name = 'password_reset'),

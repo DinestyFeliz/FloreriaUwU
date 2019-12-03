@@ -149,8 +149,8 @@ SOCIAL_AUTH_INSTAGRAM_SECRET='92c8288db78ea71d8a20537d0beb7cba'
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
-EMAIL_HOST_USER = 'YOUR EMAIL'
-EMAIL_HOST_PASSWORD = 'YOU PASSWORD'
+EMAIL_HOST_USER = 'felixeduardomarin100@gmail.com'
+EMAIL_HOST_PASSWORD = 'fieragato2'
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
 PWA_SERVIVE_WORKER_PATH = os.path.join(BASE_DIR,'serviceworker.js')

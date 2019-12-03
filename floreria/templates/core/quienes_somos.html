@@ -4,14 +4,42 @@
 {% endblock titulo %}
 {% load static %}
 {% block contenido %}
-    <div src="{% static 'img/floreria-hombre.JPG' %}">
-        <h2>Quienes Somos</h2>
+    <div class="container">
+        <div class="jumbotron">
+            <h1 class="display-4">Quienes Somos</h1>
+        </div>
+    </div>
+    <div class="container">
         <center>
-            <img src="{% static 'img/floreria-hombre.JPG' %}" Style="width: 500px">
+            <div class="row">
+                <div class="col-lg-5" style="margin-bottom: 20px;">
+                    <h2>Floreria</h2>
+                    <h2>Petalos</h2>
+                    <img src="{% static 'img/floreria-hombre.JPG' %}" style="height: 200px">
+                </div>
+                <div class="col-lg-6" style="background-color: rgb(240, 240, 240);">
+                    <h1>¿Quienes Somos?</h1>
+                    <p>Somos un grupo de terroristas informáticos Arqueo comunistas orientados al seguimiento del nihilismo,
+                        fanáticos de las chicas con orejas de animales y la comida chatarra. Dedicados al rapto, compra y
+                        venta ilegal de lolis y trapitos a espaldas de la ONU y el FBI; aprendices del hacking, testigos
+                        de Freddy y miembros del gran culto Uwuísta que controla el mundo a espaldas de todos.
+                    </p>
+                    <div class="row">
+                        <div class="col-lg-4" style="margin-bottom: 20px;">
+                            <img src="{% static 'img/Nietzsche.jpg' %}" style="width: 80px; height: 100px;" alt="">
+                        </div>
+                        <div class="col-lg-4" style="margin-bottom: 20px;">
+                            <p>Para saber más sobre Nosotros, haga click en el siguiente enlace</p>
+                            <a href="https://www.youtube.com/watch?v=efdN69QscAg">UwU</a>
+                        </div>
+                        <div class="col-lg-4" style="margin-bottom: 20px;">
+                            <div class="uwu">
+                                <img src="{% static 'img/senko-san.jpg' %}" style="height: 100px;" alt="">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </center>
-        <p> 
-        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ducimus, ullam dolorem. Quia nemo explicabo, eaque distinctio
-        maxime ullam eos voluptatibus quae beatae in voluptatum delectus nobis dolorum a architecto quam!
-        </p>
     </div>
 {% endblock contenido %}

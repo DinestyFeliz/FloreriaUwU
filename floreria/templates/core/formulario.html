@@ -4,7 +4,12 @@
 {% endblock titulo %}
 {% load static %}
 {% block contenido %}
-        <h2>Registro de Flores</h2>
+    <div class="container">
+        <div class="jumbotron">
+            <h1 class="display-4">Registro de Flores</h1>
+        </div>
+    </div>
+    <div class="container">
         <center>
             <form id="frmdatos" method="POST" action="" enctype="multipart/form-data">
             {% csrf_token %}
@@ -88,7 +93,7 @@
             </form>
         </center>
         <div id="respuesta">{{msg}}</div>
-        
+    </div>   
         <!--<div class="formulario">
             <center>
                  <form id="frmdatos" method="POST" action="" enctype="multipart/form-data">

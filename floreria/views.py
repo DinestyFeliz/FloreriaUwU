@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from .models import Categoria,Flores #importar los modelos desde el archivo models.py
  #definir los metodos con un login requerido
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, permission_required
 #debemos incluir el modelo de users del sistema
 from django.contrib.auth.models import User
 #incluimos el sistema de autentificacion de Django, 
@@ -69,11 +69,11 @@ def eliminar_flores(request,id):
     
 
 def login(request):
-    return render(request,"core/login.html")
+    return render(request,"registration/login.html")
 
 def cerrar_sesion(request):
     logout(request)
-    return render(request,"core/login.html",{'msg':'Cerro Sesión'})
+    return render(request,"registration/login.html",{'msg':'Cerro Sesión'})
     
 def login_acceso(request):
     if request.POST:
@@ -84,9 +84,8 @@ def login_acceso(request):
         if us is not None and us.is_active:
             auth_login(request,us)
             return render(request,"core/index.html")
-    return render(request,"core/login.html",{'msg':'Datos Incorrectos'})
+    return render(request,"registration/login.html",{'msg':'Datos Incorrectos'})
 
-@login_required(login_url='/login/')
 def index(request):
     return render(request,'core/index.html')
 
@@ -95,7 +94,7 @@ def gale(request):
     flor=Flores.objects.all()#select * from Peliculas
     return render(request,'core/galeria.html',{'lista':flor})
 
-@login_required(login_url='/login/')
+@permission_required('core.puede_agregar_flores')
 def formulario(request):
     categorias=Categoria.objects.all() # select * form Categoria
     if request.POST:
@@ -114,7 +113,7 @@ def formulario(request):
             cant=request.POST.get("txtStock")
             imagen=request.FILES.get("txtImagen")
             obj_categoria=Categoria.objects.get(name=catego)
-            #instanciar un objeto (modelo) Pelicula
+            #instanciar un objeto (modelo) Flores
             flor=Flores(
                 name=titulo,
                 precio=precio,
@@ -142,7 +141,31 @@ def formulario(request):
             return render(request,'core/formulario.html',{'listacategoria':categorias,'msg':'Elimino'})
     return render(request,'core/formulario.html',{'listacategoria':categorias})
 
-@login_required(login_url='/login/')
+#def registrar_usuario(request):
+#
+#    if request.POST:
+#        # recuperar el valor del boton accion
+#        accion=request.POST.get("accion")
+#        if accion=='Registrar':            
+#            nombre=request.POST.get("txtNombre")
+#            email=request.POST.get("txtCorreo")
+#            password1=request.POST.get("txtContraseña")
+#            password2=request.POST.get("txtContraseña_confirm")
+#            if password1==password2:
+#                contraseña=password1
+#            else:
+#                return render(request,'registration/registrat.html',{'listacategoria':categorias,'msg':'Contraseña no valida'})
+#                
+#            #instanciar un objeto user
+#            User=usuario(
+#                username=nombre,
+#                email=email,
+#                password=contraseña,
+#            )
+#            User.save() #graba los datos del modelo
+#            return render(request,registration/registrat.html,{'listacategoria':categorias,'msg':'Usuario Creado'})
+#    return render(request, 'registration/registrar.html')
+
 def quienes_somos(request):
     return render(request,'core/quienes_somos.html')
 
