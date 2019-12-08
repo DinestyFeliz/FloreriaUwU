@@ -19,6 +19,9 @@ from django.core import serializers
 import json
 
 from fcm_django.models import FCMDevice
+#registro de usuario
+from .forms import CustomUserForm
+from django.contrib.auth import login, authenticate
 
 @csrf_exempt
 @require_http_methods(['POST'])
@@ -140,6 +143,24 @@ def formulario(request):
             flor.delete()#elimina
             return render(request,'core/formulario.html',{'listacategoria':categorias,'msg':'Elimino'})
     return render(request,'core/formulario.html',{'listacategoria':categorias})
+
+#registro de usuario
+def registro_usuario(request):
+    data = {
+        'form':CustomUserForm()
+    }
+    if request.method == 'POST':
+        formulario = CustomUserForm(request.POST)
+        if formulario.is_valid():
+            formulario.save()
+            #autenticar al usuario y redirigirlo al inicio
+            username = formulario.cleaned_data('username')
+            password = formulario.cleaned_data('password1')
+            user = authenticate(username=username, password=password)
+            login(request, user)
+            return redirect(to='home')
+
+    return render(request, 'registration/registrar.html', data)
 
 #def registrar_usuario(request):
 #

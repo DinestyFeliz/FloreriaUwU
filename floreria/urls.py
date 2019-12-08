@@ -20,6 +20,8 @@ urlpatterns = [
     path('oauth/',include('social_django.urls',namespace='social')),
     #guardar token
     path('guardar-token/', guardar_token, name='guardar-token'),
+    #registro de usuario
+    path('registro',registro_usuario, name='registro_usuario'),
     #recuperar contraseña
     path('reset/password_reset', PasswordResetView.as_view(template_name='registration/password_reset_form.html', email_template_name="registration/password_reset_email.html"), name = 'password_reset'),
     path('reset/password_reset_done', PasswordResetDoneView.as_view(template_name='registration/password_reset_done.html'), name = 'password_reset_done'),
