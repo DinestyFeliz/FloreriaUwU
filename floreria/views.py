@@ -8,6 +8,8 @@ from django.contrib.auth.models import User
 #le di un alias a 'login'
 from django.contrib.auth import authenticate,logout, login as auth_login
 # Create your views here.
+import datetime;
+from .elemento import elemento
 
 #imports para guardar los tokens
 from django.views.decorators.http import require_http_methods
@@ -50,14 +52,7 @@ def guardar_token(request):
     except:
         return HttpResponseBadRequest(json.dumps({'mensaje':'no se ha podido guardar'}))
 
-def agregar_carrito(request,id):
-    #recuperar la lista del carrito desde la sesion
-    lista=request.session.get("carrito","")
-    #agregar el titulo a listado
-    lista=lista+str(id)+str(";")
-    #volver a ingresarlo a la sesion
-    request.session["carrito"]=lista
-    return render(request,"core/carrito.html",{'listaCarrito':lista})
+
 
 def eliminar_flores(request,id):
     flor=Flores.objects.get(name=id)#buscar Flor
@@ -69,10 +64,26 @@ def eliminar_flores(request,id):
         msg='No Elimino'
     lFlor=Flores.objects.all()# selecciono todo
     return render(request,"core/galeria.html",{'lista':lFlor,'msg':msg})
-    
+
+
 
 def login(request):
+    if request.POST:
+        usuario=request.POST.get("txtUsuario")
+        password=request.POST.get("txtPass")
+        us=authenticate(request,username=usuario,password=password)
+        msg=''
+        request.session["carrito"] = []        
+        request.session["carritox"] = []        
+        print('realizado')
+        if us is not None and us.is_active:
+            auth_login (request,us)#autentificacion de login            
+            return render(request,'core/index.html')
+        else:
+            return render(request,'registration/login.html')
     return render(request,"registration/login.html")
+
+
 
 def cerrar_sesion(request):
     logout(request)
@@ -162,6 +173,101 @@ def registro_usuario(request):
 
     return render(request, 'registration/registrar.html', data)
 
+@login_required(login_url='/login/')
+def carros(request):
+    x=request.session["carritox"]
+    suma=0
+    for item in x:
+        suma=suma+int(item["total"])           
+    return render(request,'core/carrito.html',{'x':x,'total':suma})  
+
+@login_required(login_url='/login/')
+def grabar_carro(request):
+    x=request.session["carritox"]    
+    usuario=request.user.username
+    suma=0
+    try:
+        for item in x:        
+            titulo=item["nombre"]
+            precio=int(item["precio"])
+            cantidad=int(item["cantidad"])
+            total=int(item["total"])        
+            ticket=Ticket(
+                usuario=usuario,
+                titulo=titulo,
+                precio=precio,
+                cantidad=cantidad,
+                total=total,
+                fecha=datetime.date.today()
+            )
+            ticket.save()
+            suma=suma+int(total)  
+            print("reg grabado")                 
+        mensaje="Grabado"
+        request.session["carritox"] = []
+    except:
+        mensaje="error al grabar"            
+    return render(request,'core/carrito.html',{'x':x,'total':suma,'mensaje':mensaje})
+
+@login_required(login_url='/login/')
+def carro_compras(request,id):
+    p=Flores.objects.get(name=id)
+    x=request.session["carritox"]
+    el=elemento(1,p.name,p.precio,1)
+    sw=0
+    suma=0
+    clon=[]
+    for item in x:        
+        cantidad=item["cantidad"]
+        if item["nombre"]==p.name:
+            sw=1
+            cantidad=int(cantidad)+1
+        ne=elemento(1,item["nombre"],item["precio"],cantidad)
+        suma=suma+int(ne.total())
+        clon.append(ne.toString())
+    if sw==0:
+        clon.append(el.toString())
+    x=clon    
+    request.session["carritox"]=x
+    flor=Flores.objects.all()    
+    return render(request,'core/galeria.html',{'flores':flor,'total':suma})
+
+@login_required(login_url='/login/')
+def carro_compras_mas(request,id):
+    p=Flores.objects.get(name=id)
+    x=request.session["carritox"]
+    suma=0
+    clon=[]
+    for item in x:        
+        cantidad=item["cantidad"]
+        if item["nombre"]==p.name:
+            cantidad=int(cantidad)+1
+        ne=elemento(1,item["nombre"],item["precio"],cantidad)
+        suma=suma+int(ne.total())
+        clon.append(ne.toString())
+    x=clon    
+    request.session["carritox"]=x
+    x=request.session["carritox"]        
+    return render(request,'core/carrito.html',{'x':x,'total':suma})
+
+@login_required(login_url='/login/')
+def carro_compras_menos(request,id):
+    p=Flores.objects.get(name=id)
+    x=request.session["carritox"]
+    clon=[]
+    suma=0
+    for item in x:        
+        cantidad=item["cantidad"]
+        if item["nombre"]==p.name:
+            cantidad=int(cantidad)-1
+        ne=elemento(1,item["nombre"],item["precio"],cantidad)
+        suma=suma+int(ne.total())
+        clon.append(ne.toString())
+    x=clon    
+    request.session["carritox"]=x
+    x=request.session["carritox"]    
+    return render(request,'core/carrito.html',{'x':x,'total':suma})
+
 #def registrar_usuario(request):
 #
 #    if request.POST:
@@ -190,6 +296,8 @@ def registro_usuario(request):
 def quienes_somos(request):
     return render(request,'core/quienes_somos.html')
 
+
+
 def password_reset_confirm(request):
     return render(request,'core/password_reset_confirm.html')
 
@@ -204,3 +312,6 @@ def password_reset_form(request):
 
 def password_reset_complete(request):
     return render(request,'core/password_reset_complete.html')
+
+def isset(variable):
+	return variable in locals() or variable in globals()

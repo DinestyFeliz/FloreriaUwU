@@ -151,10 +151,10 @@
                             {% endif %}
                             {% if user.is_authenticated %}
                             <li class="nav-item">
-                                <a class="nav-link" href="#">Limpiar Carrito <span class="sr-only">(current)</span></a>
+                                <a class="nav-link" href="% url 'VACIARCARRITO' %">Limpiar Carrito <span class="sr-only">(current)</span></a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#">Ver Carrito <span class="sr-only">(current)</span></a>
+                                <a class="nav-link" href="% url 'CARRITO' %">Ver Carrito <span class="sr-only">(current)</span></a>
                             </li>
                             <!--li>
                                 <b>Bienvenido {{ user.username }}</b>

@@ -25,7 +25,7 @@
                             <p class="card-text">{{p.descripcion}}</p>
                             <h6 class="card-text">${{p.precio}}</h6>
                             <a href="{% url 'ELIMINA' p.name %}" class="btn btn-primary">Eliminar</a>
-                            <a href="{% url 'AGREGAR' p.name %}" class="btn btn-secondary">Agregar a carrito</a>
+                            <a href="{% url 'AGREGAR_CARRO' p.name %}" class="btn btn-secondary">Agregar a carrito</a>
                         </div>
                     </div>
                 </div>
