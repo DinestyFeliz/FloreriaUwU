@@ -25,7 +25,7 @@ urlpatterns = [
     #guardar token
     path('guardar_token/', guardar_token, name='guardar_token'),
     #registro de usuario
-    path('registro',registro_usuario, name='registro_usuario'),
+    path('registro/',registro_usuario, name='registro_usuario'),
     #recuperar contraseña
     path('reset/password_reset', PasswordResetView.as_view(template_name='registration/password_reset_form.html', email_template_name="registration/password_reset_email.html"), name = 'password_reset'),
     path('reset/password_reset_done', PasswordResetDoneView.as_view(template_name='registration/password_reset_done.html'), name = 'password_reset_done'),

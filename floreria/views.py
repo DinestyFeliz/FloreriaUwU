@@ -66,7 +66,7 @@ def eliminar_flores(request,id):
     return render(request,"core/galeria.html",{'lista':lFlor,'msg':msg})
 
 
-
+@csrf_exempt
 def login(request):
     if request.POST:
         usuario=request.POST.get("txtUsuario")
@@ -89,6 +89,7 @@ def cerrar_sesion(request):
     logout(request)
     return render(request,"registration/login.html",{'msg':'Cerro Sesión'})
     
+@csrf_exempt   
 def login_acceso(request):
     if request.POST:
         usuario=request.POST.get("txtUser")
@@ -156,6 +157,7 @@ def formulario(request):
     return render(request,'core/formulario.html',{'listacategoria':categorias})
 
 #registro de usuario
+@csrf_exempt
 def registro_usuario(request):
     data = {
         'form':CustomUserForm()
@@ -168,7 +170,7 @@ def registro_usuario(request):
             username = formulario.cleaned_data('username')
             password = formulario.cleaned_data('password1')
             user = authenticate(username=username, password=password)
-            login(request, user)
+            login_acceso(request, user)
             return redirect(to='home')
 
     return render(request, 'registration/registrar.html', data)

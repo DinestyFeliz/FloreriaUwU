@@ -24,24 +24,6 @@ self.addEventListener('install', function(event) {
   );
 });
 
-//self.addEventListener('fetch', function(event) {
-//    event.respondWith(
-//        caches.match(event.request).then(function(response) {
-//
-//          return fetch(event.request)
-//          .catch(function(rsp) {
-//             return response; 
-//          });
-//          
-//          
-//        })
-//    );
-//});
-
-
-//solo para cachear todo reemplazar por esta versión del Fetch
-
-
 self.addEventListener('fetch', function(event) {
     event.respondWith(
 
@@ -77,12 +59,12 @@ var firebaseConfig = {
   messagingSenderId: "983352769456",
   appId: "1:983352769456:web:78ca654b00bcd1002c3475"
 };
-// Initialize Firebase
+ //Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 
 let messaging = firebase.messaging();
 
-messaging.setBackgroundMessageHandLer(function(payload){
+messaging.setBackgroundMessageHandler(function(payload){
 
     let title = payload.Notification.title;
 
