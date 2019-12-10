@@ -1,15 +1,13 @@
 from django.contrib import admin
 from django.urls import path, re_path, include 
 from .views import *
-
-
-from django.urls import path, re_path, include
 from django.contrib.auth.views import LoginView, PasswordResetView, PasswordResetDoneView, PasswordResetConfirmView, PasswordResetCompleteView
 from django.urls import reverse_lazy
 
 urlpatterns = [
     path('', index,name='IND'),
     path('galeria/',gale,name='GAL'),
+    path('proximamente/',prox,name='PROX'),
     path('formulario/',formulario,name='FORMU'),
     path('quienes_somos/',quienes_somos,name='QUIEN'),
     path('login/',login,name='LOGIN'),
@@ -23,8 +21,9 @@ urlpatterns = [
     path('grabar_carro/',grabar_carro,name='GRABAR_CARRO'),
     path('vaciar_carrito/',vacio_carrito,name='VACIARCARRITO'),
     path('oauth/',include('social_django.urls',namespace='social')),
+    path('', include('pwa.urls')), #url service worker
     #guardar token
-    path('guardar-token/', guardar_token, name='guardar-token'),
+    path('guardar_token/', guardar_token, name='guardar_token'),
     #registro de usuario
     path('registro',registro_usuario, name='registro_usuario'),
     #recuperar contraseña

@@ -14,40 +14,40 @@
     <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
     <link href="{% static 'css/estilo.css' %}" type="text/css" rel="stylesheet">
 
-    <!-- The core Firebase JS SDK is always required and must be listed first -->
-    <script src="https://www.gstatic.com/firebasejs/7.5.0/firebase-app.js"></script>
+    {% if user.is_authenticated %}
 
-    <!-- TODO: Add SDKs for Firebase products that you want to use
-     https://firebase.google.com/docs/web/setup#available-libraries -->
-    <!--script src="https://www.gstatic.com/firebasejs/7.5.0/firebase-analytics.js"></script-->
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <!--script src="https://www.gstatic.com/firebasejs/7.5.2/firebase-app.js"></script-->
     <script src="https://www.gstatic.com/firebasejs/3.9.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/3.9.0/firebase-messaging.js"></script>
 
+    <!-- TODO: Add SDKs for Firebase products that you want to use
+        https://firebase.google.com/docs/web/setup#available-libraries -->
 
-    <script>
+        <script>
         // Your web app's Firebase configuration
         var firebaseConfig = {
-            apiKey: "AIzaSyA5cv5jrW8Cu8HToqhNm7rB3nWguZ3i_Jc",
-            authDomain: "floreriauwu.firebaseapp.com",
-            databaseURL: "https://floreriauwu.firebaseio.com",
-            projectId: "floreriauwu",
-            storageBucket: "floreriauwu.appspot.com",
-            messagingSenderId: "1004657333762",
-            appId: "1:1004657333762:web:9ba7dbb5f692e5f109b91b",
-            measurementId: "G-13YHF7VVBD"
+            apiKey: "AIzaSyDmRRka_BsH6q8DU8_maU-0lJ7AbFUNW4s",
+            authDomain: "floreriauwu-34da6.firebaseapp.com",
+            databaseURL: "https://floreriauwu-34da6.firebaseio.com",
+            projectId: "floreriauwu-34da6",
+            storageBucket: "floreriauwu-34da6.appspot.com",
+            messagingSenderId: "983352769456",
+            appId: "1:983352769456:web:78ca654b00bcd1002c3475"
         };
+
         // Initialize Firebase
         firebase.initializeApp(firebaseConfig);
 
         let messaging = firebase.messaging();
 
         //primero se enlaca el serviceWorker
-        navegator.serviceWorker
+        navigator.serviceWorker
         .register('./serviceworker.js')
         .then(function(register){
 
             messaging.useServiceWorker(register);
-
+        
             //solicitamos el permiso para recivir notificaciones al usuario
             messaging.requestPermission()
             .then(function(){
@@ -58,11 +58,11 @@
             .then(function(token){
                 console.log(token);
                 //enviar el token hacia Django para guardarla en la base de datos
-                fetch('guardar-token/',{
+                fetch('guardar_token/',{
                     method:'post',
-                    header:{
-                        'content-type':'application/json',
-                        'Accept':'aplication/json'
+                    headers:{
+                        'Content-Type':'application/json',
+                        'Accept':'application/json'
                     },
                     body:JSON.stringify({
                         'token':token
@@ -99,10 +99,9 @@
 
         });
 
-        firebase.analytics();
-        
+        </script>
 
-    </script>
+    {% endif %}
 
     <title>
     {% block titulo %}
@@ -138,7 +137,7 @@
                                 <a class="nav-link" href="{% url 'GAL' %}">Galería <span class="sr-only">(current)</span></a>
                             </li>
                             {% endif %}
-                            {% if is_superuser %}
+                            {% if perms.personas.add_flores %}
                             <li class="nav-item">
                                 <a class="nav-link" href="{% url 'FORMU' %}">Formulario <span class="sr-only">(current)</span></a>
                             </li>
@@ -151,10 +150,10 @@
                             {% endif %}
                             {% if user.is_authenticated %}
                             <li class="nav-item">
-                                <a class="nav-link" href="% url 'VACIARCARRITO' %">Limpiar Carrito <span class="sr-only">(current)</span></a>
+                                <a class="nav-link" href="{% url 'VACIARCARRITO' %}">Limpiar Carrito <span class="sr-only">(current)</span></a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="% url 'CARRITO' %">Ver Carrito <span class="sr-only">(current)</span></a>
+                                <a class="nav-link" href="{% url 'CARRITO' %}">Ver Carrito <span class="sr-only">(current)</span></a>
                             </li>
                             <!--li>
                                 <b>Bienvenido {{ user.username }}</b>
@@ -207,22 +206,26 @@
                             </li>
                         </ul>
                     </div>
+                    {% if user.is_authenticated %}
                     <div class="col-md-3 mb-md-0 mb-3">
                         <h5 class="text-uppercase">Petalos</h5>
                         <ul class="list-unstyled">
                             <li>
-                                <a href="proximamente.php">Boleta Electronica</a>
+                                <a href="{% url 'PROX' %}">Boleta Electronica</a>
                             </li>
                         </ul>
                     </div>
-                    <div class="col-md-3 mb-md-0 mb-3">
-                        <h5 class="text-uppercase">Productos</h5>
-                        <ul class="list-unstyled">
-                            <li>
-                                <a href="{% url 'FORMU' %}">Formulario</a>
-                            </li>
-                        </ul>
-                    </div>
+                    {% endif %}
+                    {% if perms.personas.add_flores %}
+                        <div class="col-md-3 mb-md-0 mb-3">
+                            <h5 class="text-uppercase">Productos</h5>
+                            <ul class="list-unstyled">
+                                <li>
+                                    <a href="{% url 'FORMU' %}">Formulario</a>
+                                </li>
+                            </ul>
+                        </div>
+                    {% endif %}
                 </div>
             </div>
             <div class="footer-copyright text-center py-3">© 2018 Copyright:

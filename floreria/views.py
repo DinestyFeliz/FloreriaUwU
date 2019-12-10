@@ -15,7 +15,7 @@ from .elemento import elemento
 from django.views.decorators.http import require_http_methods
 from django.views.decorators.csrf import csrf_exempt
 
-from django.http import HttpRequest, HttpResponseBadRequest
+from django.http import HttpResponse, HttpResponseBadRequest
 
 from django.core import serializers
 import json
@@ -40,7 +40,7 @@ def guardar_token(request):
 
     dispositivo = FCMDevice()
     dispositivo.registration_id = token
-    dispositivo = True
+    dispositivo.active = True
 
     #solo si el usuario esta autenticado procederemos a enlazarlo
     if request.user.is_authenticated:
@@ -48,7 +48,7 @@ def guardar_token(request):
     
     try:
         dispositivo.save()
-        return HttpRequest(json.dumps({'mensaje':'token guardado'}))
+        return HttpResponse(json.dumps({'mensaje':'token guardado'}))
     except:
         return HttpResponseBadRequest(json.dumps({'mensaje':'no se ha podido guardar'}))
 
@@ -105,7 +105,7 @@ def index(request):
 
 @login_required(login_url='/login/')
 def gale(request):
-    flor=Flores.objects.all()#select * from Peliculas
+    flor=Flores.objects.all()#select * from flores
     return render(request,'core/galeria.html',{'lista':flor})
 
 @permission_required('core.puede_agregar_flores')
@@ -144,7 +144,7 @@ def formulario(request):
             dispositivos.send_message(
                 title="Nuevo Articulo Agregado!!!",
                 body="Se ha agregado " + formulario.cleaned_data['nombre'],
-                icon="/static/img/icon.png"
+                icon="/static/img/logo-floreria.png"
             )
 
             return render(request,'core/formulario.html',{'listacategoria':categorias,'msg':'Grabo'})
@@ -172,6 +172,13 @@ def registro_usuario(request):
             return redirect(to='home')
 
     return render(request, 'registration/registrar.html', data)
+
+#carrito
+@login_required(login_url='/login/')
+def vacio_carrito(request):
+    request.session["carritox"]=""
+    lista=request.session.get("carrito","")
+    return render(request, "core/carrito.html", {'lista':lista})
 
 @login_required(login_url='/login/')
 def carros(request):
@@ -230,7 +237,7 @@ def carro_compras(request,id):
     x=clon    
     request.session["carritox"]=x
     flor=Flores.objects.all()    
-    return render(request,'core/galeria.html',{'flores':flor,'total':suma})
+    return render(request,'core/galeria.html',{'lista':flor,'total':suma})
 
 @login_required(login_url='/login/')
 def carro_compras_mas(request,id):
@@ -268,50 +275,26 @@ def carro_compras_menos(request,id):
     x=request.session["carritox"]    
     return render(request,'core/carrito.html',{'x':x,'total':suma})
 
-#def registrar_usuario(request):
-#
-#    if request.POST:
-#        # recuperar el valor del boton accion
-#        accion=request.POST.get("accion")
-#        if accion=='Registrar':            
-#            nombre=request.POST.get("txtNombre")
-#            email=request.POST.get("txtCorreo")
-#            password1=request.POST.get("txtContraseña")
-#            password2=request.POST.get("txtContraseña_confirm")
-#            if password1==password2:
-#                contraseña=password1
-#            else:
-#                return render(request,'registration/registrat.html',{'listacategoria':categorias,'msg':'Contraseña no valida'})
-#                
-#            #instanciar un objeto user
-#            User=usuario(
-#                username=nombre,
-#                email=email,
-#                password=contraseña,
-#            )
-#            User.save() #graba los datos del modelo
-#            return render(request,registration/registrat.html,{'listacategoria':categorias,'msg':'Usuario Creado'})
-#    return render(request, 'registration/registrar.html')
-
 def quienes_somos(request):
     return render(request,'core/quienes_somos.html')
 
-
+def prox(request):
+    return render(request,'core/proximamente.html')
 
 def password_reset_confirm(request):
-    return render(request,'core/password_reset_confirm.html')
+    return render(request,'registration/password_reset_confirm.html')
 
 def password_reset_done(request):
-    return render(request,'core/password_reset_done.html')
+    return render(request,'registration/password_reset_done.html')
 
 def password_reset_email(request):
-    return render(request,'core/password_reset_email.html')
+    return render(request,'registration/password_reset_email.html')
 
 def password_reset_form(request):
-    return render(request,'core/password_reset_form.html')
+    return render(request,'registration/password_reset_form.html')
 
 def password_reset_complete(request):
-    return render(request,'core/password_reset_complete.html')
+    return render(request,'registration/password_reset_complete.html')
 
 def isset(variable):
 	return variable in locals() or variable in globals()

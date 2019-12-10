@@ -33,6 +33,7 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
+    #'django.contrib.sites', #google
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
@@ -41,6 +42,11 @@ INSTALLED_APPS = [
     'social_django', #incluir la opcion de autentificacion con redes sociales
     'pwa', #service worker
     'fcm_django', #notificaciones push
+    #login google
+    #'allauth',
+    #'allauth.account',
+    #'allauth.socialaccount',
+    #'allauth.socialaccount.providers.google',
 ]
 
 MIDDLEWARE = [
@@ -134,6 +140,8 @@ AUTHENTICATION_BACKENDS = (
     'social_core.backends.facebook.FacebookOAuth2',
     'social_core.backends.instagram.InstagramOAuth2',
     'django.contrib.auth.backends.ModelBackend',
+    #google
+    #'allauth.account.auth_backends.AuthenticationBackend',
 )
 #direccion URL al momento de logearce
 SOCIAL_AUTH_LOGIN_REDIRECT_URL='/'
@@ -153,12 +161,12 @@ EMAIL_HOST_USER = 'felixeduardomarin100@gmail.com'
 EMAIL_HOST_PASSWORD = 'fieragato2'
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
-PWA_SERVIVE_WORKER_PATH = os.path.join(BASE_DIR,'serviceworker.js')
+PWA_SERVICE_WORKER_PATH = os.path.join(BASE_DIR,'serviceworker.js')
 
 FCM_DJANGO_SETTINGS  = {
         " APP_VERBOSE_NAME " : "FloreriaUwU" ,
           # predeterminado: _ ('FCM Django') 
-        " FCM_SERVER_KEY " : "AIzaSyA5cv5jrW8Cu8HToqhNm7rB3nWguZ3i_Jc" ,
+        " FCM_SERVER_KEY " : "AIzaSyDmRRka_BsH6q8DU8_maU-0lJ7AbFUNW4s" ,
           # verdadero si desea tener solo un dispositivo activo por usuario registrado a la vez 
          # predeterminado: Falso 
         " ONE_DEVICE_PER_USER " : False,
@@ -167,3 +175,5 @@ FCM_DJANGO_SETTINGS  = {
          # predeterminado: Falso 
         " DELETE_INACTIVE_DEVICES " : True,
 }
+
+#SITE_ID = 1 #google

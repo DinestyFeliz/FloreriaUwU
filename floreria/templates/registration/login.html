@@ -14,8 +14,8 @@
                 </center>
             </div>
             <div class="row">
-                <div class="col-lg-4"></div>
-                <div class="col-lg-4" style="background-color: #E1BEE7; border-radius: 12px; margin-top: 15px; margin-bottom: 15px;">
+                <div class="col-lg-2"></div>
+                <div class="col-lg-3" style="background-color: #E1BEE7; border-radius: 12px; margin-top: 15px; margin-bottom: 15px;">
                     <form action="{% url 'LOGINACCESO' %}" method="POST">
                         {% csrf_token %}
                             <table>
@@ -34,7 +34,7 @@
                                 <center>
                                     <tr>
                                         <td>
-                                            <button style="margin-bottom: 15px; padding-left: 48%; padding-right: 48%;" type="submit" class="btn btn-primary">Ingresar</button>
+                                            <button style="margin-bottom: 15px;" type="submit" class="btn btn-primary">Ingresar</button>
                                         </td>
                                     </tr>
                                     <tr>
@@ -46,22 +46,27 @@
                             </table>
                     </form>
                 </div>
-                <div class="col-lg-4"></div>
-            </div>
-            <div class="container">
-                <table>
-                    <a class="nav-link" href="{% url 'registro_usuario' %}"> Registrar </a>
-                    <tr>
-                        <td>
-                            <a href="{% url 'social:begin' 'facebook' %}"><img class="icono" style="margin-top: 15px;" src="{% static 'img/fb-png.png' %}" alt="Iniciar Sesion con Facebook"></a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <a href="{% url 'social:begin' 'instagram' %}"><img class="icono" style="margin-top: 15px;" src="{% static 'img/ig-png.png' %}" alt="Iniciar Sesion con Instagram"></a>
-                        </td>
-                    </tr>
-                </table>
+                <div class="col-lg-2"></div>
+                <div class="col-lg-3" style="background-color: #E1BEE7; border-radius: 12px; margin-top: 15px; margin-bottom: 15px;">
+                    <center>
+                        <div class="container">
+                            <table>
+                                <h2>Registro</h2>
+                                <tr>
+                                    <td>
+                                        <a class="nav-link" href="{% url 'registro_usuario' %}"><img class="icono" style="margin-top: 5px; border-radius: 15px;" src="{% static 'img/flores_menu.jpg' %}" alt="Iniciar Sesion con Facebook"></a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <a class="nav-link" href="{% url 'social:begin' 'facebook' %}"><img class="icono" style="margin-top: 5px;" src="{% static 'img/fb-png.png' %}" alt="Iniciar Sesion con Facebook"></a>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </center>
+                </div>
+                <div class="col-lg-2"></div>
             </div>
             <div class="alert alert-danger" role="alert">
                 {{msg}}

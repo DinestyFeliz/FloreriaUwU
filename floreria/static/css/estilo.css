@@ -72,6 +72,10 @@
     width: 100px;
 }
 
+.icono img:hover{
+    filter: brightness(0.6);
+}
+
 @media(max-width:991.5px){
     .img_btn img{
         display: none;

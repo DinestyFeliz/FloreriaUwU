@@ -2,8 +2,15 @@
 var CACHE_NAME = 'my-site-cache-v1';
 var urlsToCache = [
     '/',
-    '/static/core/css/estilos.css',
-    '/static/core/img/logo.png',
+    '/quienes_somos',
+    '/proximamente',
+    '/static/css/estilo.css',
+    '/static/img/logo-floreria.png',
+    '/static/img/flor1.jpg',
+    '/static/img/flor2.jpg',
+    '/static/img/flor3.jpg',
+    '/static/img/senko-san-2.jpg',
+    '/static/img/senko-san.jpg',
 ];
 
 self.addEventListener('install', function(event) {
@@ -62,14 +69,13 @@ importScripts('https://www.gstatic.com/firebasejs/3.9.0/firebase-app.js');
 importScripts('https://www.gstatic.com/firebasejs/3.9.0/firebase-messaging.js');
 
 var firebaseConfig = {
-    apiKey: "AIzaSyA5cv5jrW8Cu8HToqhNm7rB3nWguZ3i_Jc",
-    authDomain: "floreriauwu.firebaseapp.com",
-    databaseURL: "https://floreriauwu.firebaseio.com",
-    projectId: "floreriauwu",
-    storageBucket: "floreriauwu.appspot.com",
-    messagingSenderId: "1004657333762",
-    appId: "1:1004657333762:web:9ba7dbb5f692e5f109b91b",
-    measurementId: "G-13YHF7VVBD"
+  apiKey: "AIzaSyDmRRka_BsH6q8DU8_maU-0lJ7AbFUNW4s",
+  authDomain: "floreriauwu-34da6.firebaseapp.com",
+  databaseURL: "https://floreriauwu-34da6.firebaseio.com",
+  projectId: "floreriauwu-34da6",
+  storageBucket: "floreriauwu-34da6.appspot.com",
+  messagingSenderId: "983352769456",
+  appId: "1:983352769456:web:78ca654b00bcd1002c3475"
 };
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);

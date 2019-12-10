@@ -20,6 +20,10 @@ from django.conf import settings #importo el archivo de configuracion (variables
 from django.contrib.auth.views import LoginView, PasswordResetView, PasswordResetDoneView, PasswordResetConfirmView, PasswordResetCompleteView
 from django.urls import reverse_lazy
 
+
+
+
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     # como no colocque nada, se va a la siguiente página: 
@@ -27,6 +31,8 @@ urlpatterns = [
     path('oauth/',include('social_django.urls',namespace='social')), #login de facebook
     #login usuario final
     path('accounts/', include('django.contrib.auth.urls')),
+    #login google
+    #path('accounts/', include('allauth.urls')),
     #recuperar contraseña
     path('', include('pwa.urls')), #url service worker
     path('reset/password_reset', PasswordResetView.as_view(template_name='registration/password_reset_forms.html', email_template_name="registration/password_reset_email.html"), name = 'password_reset'),

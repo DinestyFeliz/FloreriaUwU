@@ -1,0 +1,29 @@
+{% extends "core/base.html" %}
+{% block titulo %}
+    Proximamente
+{% endblock titulo %}
+{% load static %}
+{% block contenido %}
+    <div class="container">
+        <center>
+            <div class="jumbotron">
+                <h1 class="display-4">Proximamente</h1>
+            </div>
+        </center>
+    </div>
+
+    <div class="container" style="margin-bottom: 20px;">
+        <center>
+            <div>
+                <h2>Floreria Petalos</h2>
+                <center>
+                    <img style="width: 600px; height: 400px;" src="{% static 'img/senko-san-2.jpg' %}">
+                </center>
+                <h1>proxima futura funcionalidad</h1>
+                <div></div>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorum veniam nemo, quia mollitia placeat quae
+                    repellendus velit cumque optio fuga, ad aut officia magni harum. Dolores labore blanditiis expedita nesciunt.</p>
+            </div>
+        </center>
+    </div>
+{% endblock contenido %}
