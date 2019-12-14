@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',# agregamos rest framework para api
     'floreria.apps.FloreriaConfig', #incluir la aplicacion en el proyecto
     'social_django', #incluir la opcion de autentificacion con redes sociales
     'pwa', #service worker

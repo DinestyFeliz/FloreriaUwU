@@ -4,6 +4,10 @@ from .views import *
 from django.contrib.auth.views import LoginView, PasswordResetView, PasswordResetDoneView, PasswordResetConfirmView, PasswordResetCompleteView
 from django.urls import reverse_lazy
 
+from rest_framework import routers
+router = routers.DefaultRouter()
+router.register ('Flores',FloresViewSet)
+
 urlpatterns = [
     path('', index,name='IND'),
     path('galeria/',gale,name='GAL'),
@@ -20,6 +24,7 @@ urlpatterns = [
     path('carro_menos/<id>/',carro_compras_menos,name='CARRO_MENOS'),
     path('grabar_carro/',grabar_carro,name='GRABAR_CARRO'),
     path('vaciar_carrito/',vacio_carrito,name='VACIARCARRITO'),
+    path('api/', include(router.urls)),
     path('oauth/',include('social_django.urls',namespace='social')),
     path('', include('pwa.urls')), #url service worker
     #guardar token

@@ -25,6 +25,20 @@ from fcm_django.models import FCMDevice
 from .forms import CustomUserForm
 from django.contrib.auth import login, authenticate
 
+from rest_framework import viewsets
+from.serializers import FloresSerializer, CategoriaSerializer
+
+
+class FloresViewSet(viewsets.ModelViewSet):
+    queryset = Flores.objects.all()
+    serializer_class = FloresSerializer
+
+class CategoriaViewSet(viewsets.ModelViewSet):
+    queryset = Categoria.objects.all()
+    serializer_class = CategoriaSerializer
+
+
+
 @csrf_exempt
 @require_http_methods(['POST'])
 def guardar_token(request):
