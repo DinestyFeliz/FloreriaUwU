@@ -25,6 +25,17 @@ from fcm_django.models import FCMDevice
 from .forms import CustomUserForm
 from django.contrib.auth import login, authenticate
 
+from rest_framework import viewsets
+from.serializers import FloresSerializer, CategoriaSerializer
+
+class FloresViewSet(viewsets.ModelViewSet):
+    queryset = Flores.objects.all()
+    serializer_class = FloresSerializer
+
+class CategoriaViewSet(viewsets.ModelViewSet):
+    queryset = Categoria.objects.all()
+    serializer_class = CategoriaSerializer
+
 @csrf_exempt
 @require_http_methods(['POST'])
 def guardar_token(request):
@@ -144,7 +155,7 @@ def formulario(request):
             dispositivos = FCMDevice.objects.filter(active=True)
             dispositivos.send_message(
                 title="Nuevo Articulo Agregado!!!",
-                body="Se ha agregado " + formulario.cleaned_data['nombre'],
+                body="Se ha agregado " + request.POST.get("txtNombre"),
                 icon="/static/img/logo-floreria.png"
             )
 
@@ -167,12 +178,13 @@ def registro_usuario(request):
         if formulario.is_valid():
             formulario.save()
             #autenticar al usuario y redirigirlo al inicio
-            username = formulario.cleaned_data('username')
-            password = formulario.cleaned_data('password1')
-            user = authenticate(username=username, password=password)
-            login_acceso(request, user)
-            return redirect(to='home')
-
+            usuario=request.POST.get("username")
+            password=request.POST.get("password1")
+            us = authenticate(request,username=usuario,password=password)
+            if us is not None and us.is_active:
+                auth_login(request,us)
+                return render(request,"core/index.html")
+        return render(request, 'registration/registrar.html', data, {'msg':'Error con los datos'})
     return render(request, 'registration/registrar.html', data)
 
 #carrito

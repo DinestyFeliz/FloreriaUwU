@@ -2,7 +2,7 @@
         <h2>Registro de Usuario</h2>
     </center>
     <center>
-        <form id="frmdatos" method="POST" action="" enctype="multipart/form-data">
+        <form method="POST" action="">
         {% csrf_token %}
             <table>
                 {{ form.as_table }}
