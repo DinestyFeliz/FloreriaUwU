@@ -24,7 +24,7 @@ urlpatterns = [
     path('carro_menos/<id>/',carro_compras_menos,name='CARRO_MENOS'),
     path('grabar_carro/',grabar_carro,name='GRABAR_CARRO'),
     path('vaciar_carrito/',vacio_carrito,name='VACIARCARRITO'),
-    path('api/', include(router.urls)),
+    path('api/', include(router.urls)),#urlapi
     path('oauth/',include('social_django.urls',namespace='social')),
     path('', include('pwa.urls')), #url service worker
     #guardar token
