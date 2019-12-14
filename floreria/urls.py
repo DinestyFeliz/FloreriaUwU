@@ -4,6 +4,10 @@ from .views import *
 from django.contrib.auth.views import LoginView, PasswordResetView, PasswordResetDoneView, PasswordResetConfirmView, PasswordResetCompleteView
 from django.urls import reverse_lazy
 
+from rest_framework import routers
+router = routers.DefaultRouter()
+router.register ('Flores',FloresViewSet)
+
 urlpatterns = [
     path('', index,name='IND'),
     path('galeria/',gale,name='GAL'),

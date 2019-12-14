@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .models import Categoria,Flores #importar los modelos desde el archivo models.py
+from .models import Categoria,Flores,Ticket #importar los modelos desde el archivo models.py
  #definir los metodos con un login requerido
 from django.contrib.auth.decorators import login_required, permission_required
 #debemos incluir el modelo de users del sistema
